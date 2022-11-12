@@ -3,89 +3,80 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct _NODE {
+typedef struct _NODE Node;
+struct _NODE {
 	int data;
-	struct _NODE * next;
-} Node;
+	Node* prev;
+	Node* next;
+};
 
-Node* makeNode(int n) {
+typedef struct _LIST List;
+struct _LIST {
+	Node* head;
+	Node* tail;
+};
+
+Node* makeNode(int data) {
 	Node* temp = NULL;
-	while (!(temp = (Node*)malloc(sizeof(Node))));
-	temp->data = n;
-	temp->next = NULL;
+	while (!(temp = (Node*)calloc(1, sizeof(Node))));
+	temp->data = data;
 	return temp;
 }
 
-Node* appendheadNode(Node* p, int n) {
-	Node* temp = makeNode(n);
-	temp->next = p;
-	return temp;
-}
-
-void appendfirstNode(Node* p, int n) {
-	Node* temp = makeNode(n);
-	temp->next = p->next;
-	p->next = temp;
-	return;
-}
-
-void appendlastNode(Node* p, int n) {
-	Node* temp = makeNode(n);
-	while (p->next != NULL) {
-		p = p->next;
+void push_back(List* list, int data) {
+	Node* temp = makeNode(data);
+	//조건문이 NULL일 때 이면, == NULL 연산을 한 번 더 할 것이다?
+	if (list->head) {
+		temp->prev = list->tail;
+		list->tail->next = temp;
+		list->tail = temp;
 	}
-	p->next = temp;
-	return;
+	else {
+		list->head = list->tail = temp;
+	}
 }
 
-//일반적인 위치에 추가하는 함수
-// 일반화 과정에서 고민이 필요하다.
-//int insertNode(Node* p, int at, int n) {
-//	Node* temp = makeNode(n); 
-//	if (at == 0) {
-//
-//	}
-//	while ((p->next == NULL || at == 1)) {
-//		p = p->next;
-//		at--;
-//	}
-//	if (p->next == NULL && at != 1) {
-//		return 0; //길이를 벗어난 인덱스에 추가를 요청한 경우.
-//	}
-//	
-//
-//}
+void push_front(List* list, int data) {
+	Node* temp = makeNode(data);
+	if (list->head) {
+		temp->next = list->head;
+		list->head->prev = temp;
+		list->head = temp;
+	}
+	else {
+		list->head = list->tail = temp;
+	}
+}
 
-void printList(Node* p) {
+void printList(List* list) {
 	printf("[ ");
-	while (p->next != NULL) {
-		printf("%d, ", p->data);
-		p = p->next;
+	Node* pos = list->head;
+	while (pos) {
+		printf("%d, ", pos->data);
+		pos = pos->next;
 	}
-	printf("%d ]", p->data);
+	printf("]\n");
 	return;
 }
 
-void deleteList(Node* p) {
-	if (p == NULL) {
-		return;
+void deleteList(List* list) {
+	Node* pos = NULL;
+	if (list->head) {
+		for (pos = list->head; pos->next != NULL; pos = pos->next) {
+			free(pos->prev);
+		}
+		free(pos);
 	}
-	deleteList(p->next);
-	free(p);
-	return;
 }
-
 
 int main() {
+	List list = { 0 };
 	int n;
 	scanf("%d", &n);
-	Node* head = makeNode(n);
 	for (int i = 0; i < n; i++) {
-		int temp;
-		scanf("%d", &temp);
-		appendlastNode(head, temp);
+		push_back(&list, i);
 	}
-	printList(head);
-	deleteList(head);
+	printList(&list);
+	deleteList(&list);
 	return 0;
 }
