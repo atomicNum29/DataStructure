@@ -56,6 +56,7 @@ int insert(List* list, int pos, int data) {
 	Node* temp = makeNode(data);
 	if (pos) {
 		Node* cursor = list->head;
+		if (!cursor) return 0;
 		for (; pos > 1; pos--) {
 			cursor = cursor->next;
 			if (!cursor) return 0;
@@ -76,6 +77,49 @@ int insert(List* list, int pos, int data) {
 		temp->next = list->head;
 		list->head->prev = temp;
 		list->head = temp;
+	}
+	return 1;
+}
+
+void pop_back(List* list) {
+	Node* temp = list->tail->prev;
+	free(list->tail);
+	list->tail = temp;
+}
+
+void pop_front(List* list) {
+	Node* temp = list->head->next;
+	free(list->head);
+	list->head = temp;
+}
+
+// insert와 마찬가지로, pos번째 노드를 삭제
+// 성공 시 1, 실패 시 0 반환
+int erase(List* list, int pos) {
+	if (pos) {
+		Node* cursor = list->head;
+		if (!cursor) return 0;
+		for (; pos > 0; pos--) {
+			cursor = cursor->next;
+			if (!cursor) return 0;
+		}
+		if (cursor->next) {	
+			cursor->prev->next = cursor->next;
+			cursor->next->prev = cursor->prev;
+			free(cursor);
+		}
+		else {
+			cursor->prev->next = NULL;
+			list->tail = NULL;
+			free(cursor);
+		}
+	}
+	else {
+		if (list->head) {
+			Node* temp = list->head->next;
+			free(list->head);
+			list->head = temp;
+		}
 	}
 	return 1;
 }
@@ -102,6 +146,7 @@ void printList(List* list) {
 }
 
 void deleteList(List* list) {
+	if (list->head == NULL) return;
 	Node* cursor = list->head;
 	Node* next = cursor->next;
 	while (cursor) {
@@ -122,9 +167,14 @@ int main() {
 	printList(&list);
 	printf("%d\n", size(&list));
 	for (int i = 0; i < n; i++) {
-		int pos, data;
-		scanf("%d%d", &pos, &data);
-		insert(&list, pos, data);
+		int cmd, pos, data;
+		scanf("%d%d%d", &cmd, &pos, &data);
+		if (cmd) {
+			insert(&list, pos, data);
+		}
+		else {
+			erase(&list, pos);
+		}
 		printList(&list);
 	}
 	deleteList(&list);
