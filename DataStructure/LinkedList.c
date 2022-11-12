@@ -48,11 +48,43 @@ void push_front(List* list, int data) {
 	}
 }
 
+// iterator를 구현해야 할 것인가?
+// 우선은 앞에서부터 pos번째에 추가하는 것으로 구현하겠다.
+// 만약 pos가 적당한 범위를 벗어난다면, 실패한 것으로 판단하여 0을 반환한다.
+// 그 외의 경우 삽입에 성공하면 1을 반환한다.
+int insert(List* list, int pos, int data) {
+	Node* temp = makeNode(data);
+	if (pos) {
+		Node* cursor = list->head;
+		for (; pos > 1; pos--) {
+			cursor = cursor->next;
+			if (!cursor) return 0;
+		}
+		if (cursor->next) {
+			cursor->next->prev = temp;
+			temp->next = cursor->next;
+			temp->prev = cursor;
+			cursor->next = temp;
+		}
+		else {
+			cursor->next = temp;
+			temp->prev = cursor;
+			list->tail = temp;
+		}
+	}
+	else {
+		temp->next = list->head;
+		list->head->prev = temp;
+		list->head = temp;
+	}
+	return 1;
+}
+
 int size(List* list) {
 	int cnt = 0;
-	Node* pos = list->head;
-	while (pos) {
-		pos = pos->next;
+	Node* cursor = list->head;
+	while (cursor) {
+		cursor = cursor->next;
 		cnt++;
 	}
 	return cnt;
@@ -60,22 +92,22 @@ int size(List* list) {
 
 void printList(List* list) {
 	printf("[ ");
-	Node* pos = list->head;
-	while (pos) {
-		printf("%d, ", pos->data);
-		pos = pos->next;
+	Node* cursor = list->head;
+	while (cursor) {
+		printf("%d, ", cursor->data);
+		cursor = cursor->next;
 	}
 	printf("]\n");
 	return;
 }
 
 void deleteList(List* list) {
-	Node* pos = NULL;
-	if (list->head) {
-		for (pos = list->head; pos->next != NULL; pos = pos->next) {
-			free(pos->prev);
-		}
-		free(pos);
+	Node* cursor = list->head;
+	Node* next = cursor->next;
+	while (cursor) {
+		next = cursor->next;
+		free(cursor);
+		cursor = next;
 	}
 	list->head = list->tail = NULL;
 }
