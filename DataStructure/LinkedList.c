@@ -23,6 +23,14 @@ Node* makeNode(int data) {
 	return temp;
 }
 
+int front(List* list) {
+	return list->head->data;
+}
+
+int back(List* list) {
+	return list->tail->data;
+}
+
 void push_back(List* list, int data) {
 	Node* temp = makeNode(data);
 	//조건문이 NULL일 때 이면, == NULL 연산을 한 번 더 할 것이다?
