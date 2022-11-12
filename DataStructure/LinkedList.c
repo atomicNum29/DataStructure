@@ -117,13 +117,16 @@ int main() {
 	int n;
 	scanf("%d", &n);
 	for (int i = 0; i < n; i++) {
-		if (i % 2)
-			push_back(&list, i);
-		else
-			push_front(&list, i);
+		push_back(&list, i);
 	}
 	printList(&list);
 	printf("%d\n", size(&list));
+	for (int i = 0; i < n; i++) {
+		int pos, data;
+		scanf("%d%d", &pos, &data);
+		insert(&list, pos, data);
+		printList(&list);
+	}
 	deleteList(&list);
 	printf("%d\n", size(&list));
 	return 0;
