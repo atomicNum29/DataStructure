@@ -16,13 +16,6 @@ struct _LIST {
 	Node* tail;
 };
 
-Node* makeNode(int data) {
-	Node* temp = NULL;
-	while (!(temp = (Node*)calloc(1, sizeof(Node))));
-	temp->data = data;
-	return temp;
-}
-
 int front(List* list) {
 	return list->head->data;
 }
@@ -32,7 +25,9 @@ int back(List* list) {
 }
 
 void push_back(List* list, int data) {
-	Node* temp = makeNode(data);
+	Node* temp = NULL;
+	temp = (Node*)calloc(1, sizeof(Node));
+	temp->data = data;
 	//조건문이 NULL일 때 이면, == NULL 연산을 한 번 더 할 것이다?
 	if (list->head) {
 		temp->prev = list->tail;
@@ -45,7 +40,9 @@ void push_back(List* list, int data) {
 }
 
 void push_front(List* list, int data) {
-	Node* temp = makeNode(data);
+	Node* temp = NULL;
+	temp = (Node*)calloc(1, sizeof(Node));
+	temp->data = data;
 	if (list->head) {
 		temp->next = list->head;
 		list->head->prev = temp;
@@ -60,8 +57,11 @@ void push_front(List* list, int data) {
 // 우선은 앞에서부터 pos번째에 추가하는 것으로 구현하겠다.
 // 만약 pos가 적당한 범위를 벗어난다면, 실패한 것으로 판단하여 0을 반환한다.
 // 그 외의 경우 삽입에 성공하면 1을 반환한다.
+// 이렇게 구현 한 경우, 시간 복잡도는 O(n)이 된다.
 int insert(List* list, int pos, int data) {
-	Node* temp = makeNode(data);
+	Node* temp = NULL;
+	temp = (Node*)calloc(1, sizeof(Node));
+	temp->data = data;
 	if (pos) {
 		Node* cursor = list->head;
 		if (!cursor) return 0;
