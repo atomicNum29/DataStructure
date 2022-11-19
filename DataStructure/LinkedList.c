@@ -16,12 +16,19 @@ struct _LIST {
 	Node* tail;
 };
 
+// 존재하지 않을 시 0 반환
 int front(List* list) {
-	return list->head->data;
+	if (list->head) {
+		return list->head->data;
+	}
+	return 0;
 }
 
 int back(List* list) {
-	return list->tail->data;
+	if (list->head) {
+		return list->tail->data;
+	}
+	return 0;
 }
 
 void push_back(List* list, int data) {
@@ -90,20 +97,24 @@ int insert(List* list, int pos, int data) {
 }
 
 void pop_back(List* list) {
-	Node* temp = list->tail->prev;
-	free(list->tail);
-	list->tail = temp;
+	if (list->head) {
+		Node* temp = list->tail->prev;
+		free(list->tail);
+		list->tail = temp;
+	}
 }
 
 void pop_front(List* list) {
-	Node* temp = list->head->next;
-	free(list->head);
-	list->head = temp;
+	if (list->head) {
+		Node* temp = list->head->next;
+		free(list->head);
+		list->head = temp;
+	}
 }
 
 // insert와 마찬가지로, pos번째 노드를 삭제
 // 성공 시 1, 실패 시 0 반환
-int erase(List* list, int pos) {
+int erase(List* list, unsigned int pos) {
 	if (pos) {
 		Node* cursor = list->head;
 		if (!cursor) return 0;
@@ -154,9 +165,8 @@ void printList(List* list) {
 }
 
 void deleteList(List* list) {
-	if (list->head == NULL) return;
 	Node* cursor = list->head;
-	Node* next = cursor->next;
+	Node* next;
 	while (cursor) {
 		next = cursor->next;
 		free(cursor);
