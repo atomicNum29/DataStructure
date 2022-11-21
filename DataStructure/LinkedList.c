@@ -65,7 +65,7 @@ void push_front(List* list, int data) {
 
 int insert(List* list, Node* pos, int data) {
 	Node* temp = calloc(1, sizeof(Node));
-	temp->data = pos;
+	temp->data = data;
 	if (pos->prev) {
 		pos->prev->next = temp;
 		temp->prev = pos->prev;
@@ -166,10 +166,10 @@ int main() {
 		int cmd, pos, data;
 		scanf("%d%d%d", &cmd, &pos, &data);
 		if (cmd) {
-			insert(&list, pos, data);
+			insert(&list, list.head, data);
 		}
 		else {
-			erase(&list, pos);
+			erase(&list, list.tail);
 		}
 		printList(&list);
 	}
