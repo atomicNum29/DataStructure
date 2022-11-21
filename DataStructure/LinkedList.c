@@ -164,7 +164,7 @@ void printList(List* list) {
 	return;
 }
 
-void deleteList(List* list) {
+void clearList(List* list) {
 	Node* cursor = list->head;
 	Node* next;
 	while (cursor) {
