@@ -64,19 +64,21 @@ void push_front(List* list, int data) {
 }
 
 int insert(List* list, Node* pos, int data) {
-	Node* temp = calloc(1, sizeof(Node));
-	temp->data = data;
-	if (pos->prev) {
-		pos->prev->next = temp;
-		temp->prev = pos->prev;
+	if (pos) {
+		Node* temp = calloc(1, sizeof(Node));
+		temp->data = data;
+		if (pos->prev) {
+			pos->prev->next = temp;
+			temp->prev = pos->prev;
+		}
+		else {
+			list->head = temp;
+		}
+		pos->prev = temp;
+		temp->next = pos;
+		list->size += 1;
+		return 1;
 	}
-	else {
-		list->head = temp;
-	}
-	pos->prev = temp;
-	temp->next = pos;
-	list->size += 1;
-	return 1;
 }
 
 int pop_back(List* list) {
@@ -101,8 +103,9 @@ int pop_front(List* list) {
 	return 0;
 }
 
-int erase(List* list, Node* pos) {
+Node* erase(List* list, Node* pos) {
 	if (pos) {
+		Node* rtn = pos->next;
 		if (pos->prev && pos->next) {
 			pos->prev->next = pos->next;
 			pos->next->prev = pos->prev;
@@ -121,9 +124,9 @@ int erase(List* list, Node* pos) {
 		}
 		free(pos);
 		list->size -= 1;
-		return 1;
+		return rtn;
 	}
-	return 0;
+	return NULL;
 }
 
 int size(List* list) {
@@ -158,21 +161,9 @@ int main() {
 	int n;
 	scanf("%d", &n);
 	for (int i = 0; i < n; i++) {
-		push_back(&list, i);
+		insert(&list, i%2?list.head:list.tail, i);
 	}
 	printList(&list);
-	printf("%d\n", size(&list));
-	for (int i = 0; i < n; i++) {
-		int cmd, pos, data;
-		scanf("%d%d%d", &cmd, &pos, &data);
-		if (cmd) {
-			insert(&list, list.head, data);
-		}
-		else {
-			erase(&list, list.tail);
-		}
-		printList(&list);
-	}
 	clearList(&list);
 	printf("%d\n", size(&list));
 	return 0;
