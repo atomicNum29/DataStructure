@@ -14,6 +14,7 @@ typedef struct _LIST List;
 struct _LIST {
 	Node* head;
 	Node* tail;
+	int size;
 };
 
 // 존재하지 않을 시 0 반환
@@ -44,6 +45,7 @@ void push_back(List* list, int data) {
 	else {
 		list->head = list->tail = temp;
 	}
+	list->size += 1;
 }
 
 void push_front(List* list, int data) {
@@ -58,6 +60,7 @@ void push_front(List* list, int data) {
 	else {
 		list->head = list->tail = temp;
 	}
+	list->size += 1;
 }
 
 int insert(List* list, Node* pos, int data) {
@@ -72,6 +75,7 @@ int insert(List* list, Node* pos, int data) {
 	}
 	pos->prev = temp;
 	temp->next = pos;
+	list->size += 1;
 	return 1;
 }
 
@@ -80,6 +84,7 @@ int pop_back(List* list) {
 		Node* temp = list->tail->prev;
 		free(list->tail);
 		list->tail = temp;
+		list->size -= 1;
 		return 1;
 	}
 	return 0;
@@ -90,6 +95,7 @@ int pop_front(List* list) {
 		Node* temp = list->head->next;
 		free(list->head);
 		list->head = temp;
+		list->size -= 1;
 		return 1;
 	}
 	return 0;
@@ -114,19 +120,14 @@ int erase(List* list, Node* pos) {
 			list->tail = NULL;
 		}
 		free(pos);
+		list->size -= 1;
 		return 1;
 	}
 	return 0;
 }
 
 int size(List* list) {
-	int cnt = 0;
-	Node* cursor = list->head;
-	while (cursor) {
-		cursor = cursor->next;
-		cnt++;
-	}
-	return cnt;
+	return list->size;
 }
 
 void printList(List* list) {
@@ -149,6 +150,7 @@ void clearList(List* list) {
 		cursor = next;
 	}
 	list->head = list->tail = NULL;
+	list->size = 0;
 }
 
 int main() {
