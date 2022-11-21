@@ -67,7 +67,7 @@ Node* push_front(List* list, int data) {
 
 Node* insert(List* list, Node* pos, int data) {
 	if (pos) {
-		Node* temp = calloc(1, sizeof(Node));
+		Node* temp = (Node*)calloc(1, sizeof(Node));
 		temp->data = data;
 		if (pos->prev) {
 			pos->prev->next = temp;
