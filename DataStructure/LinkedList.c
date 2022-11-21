@@ -95,35 +95,28 @@ int pop_front(List* list) {
 	return 0;
 }
 
-// insert와 마찬가지로, pos번째 노드를 삭제
-// 성공 시 1, 실패 시 0 반환
-int erase(List* list, unsigned int pos) {
+int erase(List* list, Node* pos) {
 	if (pos) {
-		Node* cursor = list->head;
-		if (!cursor) return 0;
-		for (; pos > 0; pos--) {
-			cursor = cursor->next;
-			if (!cursor) return 0;
+		if (pos->prev && pos->next) {
+			pos->prev->next = pos->next;
+			pos->next->prev = pos->prev;
 		}
-		if (cursor->next) {	
-			cursor->prev->next = cursor->next;
-			cursor->next->prev = cursor->prev;
-			free(cursor);
+		else if (pos->prev) {
+			list->tail = pos->prev;
+			pos->prev->next = NULL;
+		}
+		else if (pos->next) {
+			list->head = pos->next;
+			pos->next->prev = NULL;
 		}
 		else {
-			cursor->prev->next = NULL;
+			list->head = NULL;
 			list->tail = NULL;
-			free(cursor);
 		}
+		free(pos);
+		return 1;
 	}
-	else {
-		if (list->head) {
-			Node* temp = list->head->next;
-			free(list->head);
-			list->head = temp;
-		}
-	}
-	return 1;
+	return 0;
 }
 
 int size(List* list) {
