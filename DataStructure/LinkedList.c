@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 typedef struct _NODE Node;
 struct _NODE {
@@ -17,8 +18,8 @@ struct _LIST {
 	int size;
 };
 
-// 존재하지 않을 시 0 반환
 int front(List* list) {
+	assert(list->head != NULL);
 	if (list->head) {
 		return list->head->data;
 	}
@@ -26,7 +27,8 @@ int front(List* list) {
 }
 
 int back(List* list) {
-	if (list->head) {
+	assert(list->tail != NULL);
+	if (list->tail) {
 		return list->tail->data;
 	}
 	return 0;
