@@ -32,7 +32,7 @@ int back(List* list) {
 	return 0;
 }
 
-void push_back(List* list, int data) {
+Node* push_back(List* list, int data) {
 	Node* temp = NULL;
 	temp = (Node*)calloc(1, sizeof(Node));
 	temp->data = data;
@@ -46,9 +46,10 @@ void push_back(List* list, int data) {
 		list->head = list->tail = temp;
 	}
 	list->size += 1;
+	return temp;
 }
 
-void push_front(List* list, int data) {
+Node* push_front(List* list, int data) {
 	Node* temp = NULL;
 	temp = (Node*)calloc(1, sizeof(Node));
 	temp->data = data;
@@ -61,9 +62,10 @@ void push_front(List* list, int data) {
 		list->head = list->tail = temp;
 	}
 	list->size += 1;
+	return temp;
 }
 
-int insert(List* list, Node* pos, int data) {
+Node* insert(List* list, Node* pos, int data) {
 	if (pos) {
 		Node* temp = calloc(1, sizeof(Node));
 		temp->data = data;
@@ -77,30 +79,27 @@ int insert(List* list, Node* pos, int data) {
 		pos->prev = temp;
 		temp->next = pos;
 		list->size += 1;
-		return 1;
+		return pos;
 	}
+	return push_back(list, data);
 }
 
-int pop_back(List* list) {
-	if (list->head) {
+void pop_back(List* list) {
+	if (list->tail) {
 		Node* temp = list->tail->prev;
 		free(list->tail);
 		list->tail = temp;
 		list->size -= 1;
-		return 1;
 	}
-	return 0;
 }
 
-int pop_front(List* list) {
+void pop_front(List* list) {
 	if (list->head) {
 		Node* temp = list->head->next;
 		free(list->head);
 		list->head = temp;
 		list->size -= 1;
-		return 1;
 	}
-	return 0;
 }
 
 Node* erase(List* list, Node* pos) {
