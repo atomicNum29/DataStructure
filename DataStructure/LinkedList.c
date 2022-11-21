@@ -96,20 +96,24 @@ int insert(List* list, int pos, int data) {
 	return 1;
 }
 
-void pop_back(List* list) {
+int pop_back(List* list) {
 	if (list->head) {
 		Node* temp = list->tail->prev;
 		free(list->tail);
 		list->tail = temp;
+		return 1;
 	}
+	return 0;
 }
 
-void pop_front(List* list) {
+int pop_front(List* list) {
 	if (list->head) {
 		Node* temp = list->head->next;
 		free(list->head);
 		list->head = temp;
+		return 1;
 	}
+	return 0;
 }
 
 // insert와 마찬가지로, pos번째 노드를 삭제
