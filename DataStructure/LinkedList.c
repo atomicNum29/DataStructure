@@ -157,15 +157,15 @@ void clearList(List* list) {
 	list->size = 0;
 }
 
-int main() {
-	List list = { 0 };
-	int n;
-	scanf("%d", &n);
-	for (int i = 0; i < n; i++) {
-		insert(&list, i%2?list.head:list.tail, i);
-	}
-	printList(&list);
-	clearList(&list);
-	printf("%d\n", size(&list));
-	return 0;
-}
+//int main() {
+//	List list = { 0 };
+//	int n;
+//	scanf("%d", &n);
+//	for (int i = 0; i < n; i++) {
+//		insert(&list, i%2?list.head:list.tail, i);
+//	}
+//	printList(&list);
+//	clearList(&list);
+//	printf("%d\n", size(&list));
+//	return 0;
+//}
