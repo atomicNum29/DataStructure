@@ -1,22 +1,5 @@
-#define _CRT_SECURE_NO_WARNINGS
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-
-typedef struct _NODE Node;
-struct _NODE {
-	int data;
-	Node* prev;
-	Node* next;
-};
-
-typedef struct _LIST List;
-struct _LIST {
-	Node* head;
-	Node* tail;
-	int size;
-};
+#include "LinkedList.h"
 
 int front(List* list) {
 	assert(list->head != NULL);
