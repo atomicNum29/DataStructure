@@ -15,5 +15,25 @@ int main() {
 
 	printList(&list);
 
+	Node* pos, * next;
+	List tempList = { 0 };
+	for (int i = 0; i < n; i++) {
+		pos = list.head;
+		next = pos->next;
+		for (int j = i + 1; j < n; j++) {
+			if (pos->data > next->data) {
+				pos = next;
+			}
+			next = next->next;
+		}
+		push_back(&tempList, pos->data);
+		erase(&list, pos);
+	}
+
+	printList(&tempList);
+
+	clearList(&list);
+	clearList(&tempList);
+
 	return 0;
 }
