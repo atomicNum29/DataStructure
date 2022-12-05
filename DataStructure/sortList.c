@@ -3,6 +3,7 @@
 #include "LinkedList.h"
 
 void selectionSort(List* list);
+void bubbleSort(List* list);
 
 int main() {
 	List list = { 0 };
@@ -17,7 +18,7 @@ int main() {
 
 	printList(&list);
 
-	selectionSort(&list);
+	bubbleSort(&list);
 	printList(&list);
 
 	clearList(&list);
@@ -26,7 +27,7 @@ int main() {
 }
 
 void selectionSort(List* list) {
-	Node* pos, * next;
+	Node* pos = NULL, * next = NULL;
 	List tempList = { 0 };
 	while ( size(list) ) {
 		pos = begin(list);
@@ -42,4 +43,20 @@ void selectionSort(List* list) {
 	}
 	swapList(list, &tempList);
 	clearList(&tempList);
+}
+
+void bubbleSort(List* list) {
+	Node* pos = NULL;
+	int n = size(list);
+	for (int i = 0; i < n; i++) {
+		pos = begin(list);
+		for (int j = 0; j < n - i - 1; j++) {
+			if (pos->data > pos->next->data) {
+				int temp = pos->next->data;
+				pos->next->data = pos->data;
+				pos->data = temp;
+			}
+			pos = pos->next;
+		}
+	}
 }
