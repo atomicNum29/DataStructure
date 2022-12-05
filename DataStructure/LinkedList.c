@@ -140,6 +140,13 @@ void clearList(List* list) {
 	list->size = 0;
 }
 
+void swapList(List* A, List* B) {
+	List temp = { 0 };
+	temp = *A;
+	*A = *B;
+	*B = temp;
+}
+
 //int main() {
 //	List list = { 0 };
 //	int n;
