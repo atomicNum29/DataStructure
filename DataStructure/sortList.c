@@ -29,8 +29,8 @@ int main() {
 		push_back(&tempList, pos->data);
 		erase(&list, pos);
 	}
-
-	printList(&tempList);
+	swapList(&list, &tempList);
+	printList(&list);
 
 	clearList(&list);
 	clearList(&tempList);
