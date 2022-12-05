@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "LinkedList.h"
 
+void selectionSort(List* list);
+
 int main() {
 	List list = { 0 };
 	int n;
@@ -15,25 +17,29 @@ int main() {
 
 	printList(&list);
 
+	selectionSort(&list);
+	printList(&list);
+
+	clearList(&list);
+
+	return 0;
+}
+
+void selectionSort(List* list) {
 	Node* pos, * next;
 	List tempList = { 0 };
-	for (int i = 0; i < n; i++) {
-		pos = list.head;
+	while ( size(list) ) {
+		pos = list->head;
 		next = pos->next;
-		for (int j = i + 1; j < n; j++) {
+		while( next ) {
 			if (pos->data > next->data) {
 				pos = next;
 			}
 			next = next->next;
 		}
 		push_back(&tempList, pos->data);
-		erase(&list, pos);
+		erase(list, pos);
 	}
-	swapList(&list, &tempList);
-	printList(&list);
-
-	clearList(&list);
+	swapList(list, &tempList);
 	clearList(&tempList);
-
-	return 0;
 }
