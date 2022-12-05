@@ -29,7 +29,7 @@ void selectionSort(List* list) {
 	Node* pos, * next;
 	List tempList = { 0 };
 	while ( size(list) ) {
-		pos = list->head;
+		pos = begin(list);
 		next = pos->next;
 		while( next ) {
 			if (pos->data > next->data) {
