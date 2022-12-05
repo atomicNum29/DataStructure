@@ -21,6 +21,8 @@ struct _LIST {
 
 int front(List* list);
 int back(List* list);
+Node* begin(List* list);
+Node* end(List* list);
 Node* push_back(List* list, int data);
 Node* push_front(List* list, int data);
 Node* insert(List* list, Node* pos, int data);
