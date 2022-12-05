@@ -30,5 +30,6 @@ Node* erase(List* list, Node* pos);
 int size(List* list);
 void printList(List* list);
 void clearList(List* list);
+void swapList(List* A, List* B);
 
 #endif
