@@ -17,6 +17,14 @@ int back(List* list) {
 	return 0;
 }
 
+Node* begin(List* list) {
+	return list->head;
+}
+
+Node* end(List* list) {
+	return list->tail;
+}
+
 Node* push_back(List* list, int data) {
 	Node* temp = NULL;
 	temp = (Node*)calloc(1, sizeof(Node));
