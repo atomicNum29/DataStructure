@@ -155,6 +155,13 @@ void swapList(List* A, List* B) {
 	*B = temp;
 }
 
+void copyList(List* to, List* from) {
+	clearList(to);
+	for (Node* pos = begin(from); pos; pos = pos->next) {
+		push_back(to, pos->data);
+	}
+}
+
 //int main() {
 //	List list = { 0 };
 //	int n;

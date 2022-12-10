@@ -33,5 +33,6 @@ int size(List* list);
 void printList(List* list);
 void clearList(List* list);
 void swapList(List* A, List* B);
+void copyList(List* to, List* from);
 
 #endif
