@@ -4,9 +4,11 @@
 
 void selectionSort(List* list);
 void bubbleSort(List* list);
+void quickSort(List* list, Node* left, Node* right);
 
 int main() {
 	List list = { 0 };
+	List temp = { 0 };
 	int n;
 	scanf("%d", &n);
 
@@ -18,7 +20,7 @@ int main() {
 
 	printList(&list);
 
-	bubbleSort(&list);
+	quickSort(&list, begin(&list), end(&list));
 	printList(&list);
 
 	clearList(&list);
@@ -59,4 +61,41 @@ void bubbleSort(List* list) {
 			pos = pos->next;
 		}
 	}
+}
+
+// [left, right]
+void quickSort(List* list, Node* left, Node* right) {
+	if (!left)
+		return;
+
+	Node* temp = left->next;
+	Node* nextLeft = left;
+	Node* nextRight = right;
+	Node* stop = right->next;
+
+	while (temp != stop) {
+		if (temp->data < left->data) {
+			nextLeft = insert(list, nextLeft, temp->data);
+			printf("3: ");
+			printList(list);
+		}
+		else {
+			nextRight = insert(list, nextRight->next, temp->data);
+			printf("4: ");
+			printList(list);
+		}
+		stop = right->next;
+		temp = erase(list, temp);
+		printf("5: ");
+		printList(list);
+	}
+
+	
+	printf("1: ");
+	printList(list);
+
+	if(left != nextLeft)
+		quickSort(list, nextLeft, left);
+	if(right != nextRight)
+		quickSort(list, left->next, nextRight);
 }

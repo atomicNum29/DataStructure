@@ -72,7 +72,7 @@ Node* insert(List* list, Node* pos, int data) {
 		pos->prev = temp;
 		temp->next = pos;
 		list->size += 1;
-		return pos;
+		return temp;
 	}
 	return push_back(list, data);
 }
