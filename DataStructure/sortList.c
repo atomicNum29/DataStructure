@@ -76,26 +76,26 @@ void quickSort(List* list, Node* left, Node* right) {
 	while (temp != stop) {
 		if (temp->data < left->data) {
 			nextLeft = insert(list, nextLeft, temp->data);
-			printf("3: ");
+			printf("3, %d, %d: ", left->data, temp->data);
 			printList(list);
 		}
 		else {
 			nextRight = insert(list, nextRight->next, temp->data);
-			printf("4: ");
+			printf("4, %d, %d: ", left->data, temp->data);
 			printList(list);
 		}
 		stop = right->next;
 		temp = erase(list, temp);
-		printf("5: ");
+		printf("5, %d, %d: ", left->data, temp->data);
 		printList(list);
 	}
 
 	
-	printf("1: ");
+	printf("1, %d: ", left->data);
 	printList(list);
 
 	if(left != nextLeft)
-		quickSort(list, nextLeft, left);
+		quickSort(list, nextLeft, left->prev);
 	if(right != nextRight)
 		quickSort(list, left->next, nextRight);
 }
