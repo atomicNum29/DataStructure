@@ -140,7 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="LinkedList.c" />
-    <ClCompile Include="sortList.c" />
+    <ClCompile Include="sortList.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Tree.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LinkedList.h" />
