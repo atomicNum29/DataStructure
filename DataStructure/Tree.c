@@ -9,6 +9,12 @@ struct _TNODE {
 	int data;
 	TNode* parent;
 	TNode** child;
+	int degree;
+};
+
+typedef struct _TREE Tree;
+struct _TREE {
+	TNode* root;
 };
 
 int main() {
